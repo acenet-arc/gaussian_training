@@ -422,12 +422,5 @@ Gaussian freqmem utility: <http://gaussian.com/freqmem/>
         * GaussView: <http://gaussian.com/gaussview6> 
 
 ---
-title:  Introduction to running Gaussian
-author: Oliver Stueker
-date:   February 18th, 2020
-license: [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
-abstract: |
-  This is material is for an introductory session on running Gaussian.
-  It does not cover any QM theory but instead focuses on the technical aspects.
 geometry: margin=0.75in
 ...
