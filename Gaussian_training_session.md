@@ -423,6 +423,18 @@ Gaussian freqmem utility: <http://gaussian.com/freqmem/>
 * Tools:
     * OpenBabel: <http://openbabel.org/>
 
+
+----
+
+* Online Databases/services:
+    * NIH:
+        * PubChem: <https://pubchem.ncbi.nlm.nih.gov/>
+        * NIH CACTUS <https://cactus.nci.nih.gov/>
+        * Online SMILES Translator and Structure File Generator <https://cactus.nci.nih.gov/translate/>
+        * Chemical Structure Lookup Service (CSLS) <https://cactus.nci.nih.gov/cgi-bin/lookup/search>
+    * ChemSpider: <http://www.chemspider.com/>
+    * ChEMBL: <https://www.ebi.ac.uk/chembl/>
+
 ---
 geometry: margin=0.75in
 ...
