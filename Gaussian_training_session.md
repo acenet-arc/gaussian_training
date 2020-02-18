@@ -420,6 +420,8 @@ Gaussian freqmem utility: <http://gaussian.com/freqmem/>
         * Jmol: <http://www.jmol.org/>
     * commercial:
         * GaussView: <http://gaussian.com/gaussview6> 
+* Tools:
+    * OpenBabel: <http://openbabel.org/>
 
 ---
 geometry: margin=0.75in
