@@ -1,0 +1,6 @@
+.reveal {font-size: 26px;}
+.reveal p {text-align: left;}
+.reveal code {
+    background-color: "#EEEEEE";
+    font-weight: bold;
+}
