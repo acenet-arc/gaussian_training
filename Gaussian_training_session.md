@@ -423,7 +423,6 @@ Gaussian freqmem utility: <http://gaussian.com/freqmem/>
 * Tools:
     * OpenBabel: <http://openbabel.org/>
 
-
 ----
 
 * Online Databases/services:
@@ -434,6 +433,9 @@ Gaussian freqmem utility: <http://gaussian.com/freqmem/>
         * Chemical Structure Lookup Service (CSLS) <https://cactus.nci.nih.gov/cgi-bin/lookup/search>
     * ChemSpider: <http://www.chemspider.com/>
     * ChEMBL: <https://www.ebi.ac.uk/chembl/>
+    * Jmol Demo: 
+        * <https://chemapps.stolaf.edu/jmol/jsmol/simple1.htm>
+        * <http://ostueker.github.io/simple_jmol_demo/jmol_surfaces.html>
 
 ---
 geometry: margin=0.75in
