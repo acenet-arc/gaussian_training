@@ -144,6 +144,8 @@ Links:
 
 -----
 
+### Basis Set
+
 A basis set defines a set of basis functions, which are used to calculate the
 molecular orbitals. Common basis sets are:
 
@@ -171,6 +173,19 @@ The job type defines what kind of calculation should be performed:
 * `OPT` -- Geometry Optimization -- typically an energy minimization
 * `Opt=TS` -- Transition State search
 * Scanning Potential Energy Surfaces
+
+-----
+
+### Notes about Keywords:
+
+* Capitalization does not matter. `OPT` is the same as `Opt` or `opt`.
+* keywords and options may be shortened to their shortest unique abbreviation.
+  The keyword is actually `Optimization`, but as no other keyword begins with
+  `Opt`, it can be abbreviated.
+* Some keywords can take options (see documentation) e.g. `Opt=Z-Matrix` or
+  or `Opt=TS`. These options can also be combined e.g. `Opt=(TS,Z-Matrix)`.
+
+List of Gaussian Keywords: <https://gaussian.com/keywords/>
 
 -----
 
@@ -225,11 +240,37 @@ d1=0.0
 
 * `%MEM=30GB` -- request 30GB of memory
 
-* `%NProcShared=4` -- request a job for 4 CPUs
+* `%NProcShared=4` -- (or `%NProc=4`) request a job for 4 CPUs
 
 * `%CHK=/scratch/username/mycoolmolecule.chk` -- set checkpoint filename
 
 Gaussian Link0 commands: <http://gaussian.com/link0/>
+
+
+-----
+
+## Alternative Way to Specify Memory and CPUs
+
+Order of precedence: Link0 > command line > environment variable
+
+ Link0 (%-lines)  command line  environment variable        Note     
+----------------  ------------  --------------------------  ---------
+`%Mem=30GB`       `-m=30GB`     `export GAUSS_MDEF="30GB"`  &ast;    
+`%NProc=4`                      `export GAUSS_PDEF="4"`     &dagger; 
+`%CPU=0-31`       `-c="0-31"`   `export GAUSS_CDEF="0-31"`  &ddagger;
+
+See _Equivalency_-tab on <http://gaussian.com/options/> or <http://gaussian.com/link0/>.
+
+<small>
+&ast;:     Unit is indicated as `MB` or `GB` (not `M` or `G` as for SLURM).  
+&dagger;:  The command line option `-p` does not work for Gaussian 16.c01.  
+&ddagger;: The Gaussian manual suggests using `%CPU` instead of `%NProc` to make
+sure that Gaussian processes are "pinned" to the processors, which can avoid cache
+misses.  On Compute Canada clusters, processes are pinned automatically by the 
+scheduler and at the time of job-submission it cannot be determined which 
+specific CPU cores will be assigned to the job.  If at all, the `%CPU` notation
+(or its counterparts) should only be used when requesting whole nodes.
+</small>
 
 -----
 
@@ -306,6 +347,39 @@ My Big Molecule with a large basis set
 
 ...
 ```
+
+----
+
+## Specifying Resources with environment vars
+
+**big_gaussian_job.sh:**
+```bash
+#!/bin/bash
+#SBATCH --mem=125G            # memory per node
+#SBATCH --cpus-per-task=32    # cpus as defined by GAUSS_PDEF
+#SBATCH --time=03-00:00       # expect run time (DD-HH:MM)
+module load gaussian/g16.c01 
+# use localscatch:
+export GAUSS_SCRDIR=$SLURM_TMPDIR
+export GAUSS_MDEF="124GB"     # A bit lower than --mem=
+export GAUSS_PDEF="32"
+
+g16 < big_molecule.com  > big_molecule.log
+```
+
+**big_molecule.com:**
+```{#mycode .gaussian .numberLines startFrom="1"}
+%CHK=/scratch/<USERNAME>/big_molecule.chk
+#N MP2/6-311++G(3df,2p)  OPT  FREQ   MaxDisk=400GB
+
+My Big Molecule with a large basis set
+
+...
+```
+
+<small>
+**Note** that the unit for `--mem` is `G`, while for `GAUSS_MDEF` it is `GB`!
+</small>
 
 ----
 
@@ -412,6 +486,8 @@ Gaussian freqmem utility: <http://gaussian.com/freqmem/>
 
 ----
 
+## Software
+
 * Molecule Editors:
     * Open Source:
         * Avogardro: <https://avogadro.cc/>
@@ -425,17 +501,18 @@ Gaussian freqmem utility: <http://gaussian.com/freqmem/>
 
 ----
 
-* Online Databases/services:
-    * NIH:
-        * PubChem: <https://pubchem.ncbi.nlm.nih.gov/>
-        * NIH CACTUS <https://cactus.nci.nih.gov/>
-        * Online SMILES Translator and Structure File Generator <https://cactus.nci.nih.gov/translate/>
-        * Chemical Structure Lookup Service (CSLS) <https://cactus.nci.nih.gov/cgi-bin/lookup/search>
-    * ChemSpider: <http://www.chemspider.com/>
-    * ChEMBL: <https://www.ebi.ac.uk/chembl/>
-    * Jmol Demo: 
-        * <https://chemapps.stolaf.edu/jmol/jsmol/simple1.htm>
-        * <http://ostueker.github.io/simple_jmol_demo/jmol_surfaces.html>
+## Online Databases/services
+
+* NIH:
+    * PubChem: <https://pubchem.ncbi.nlm.nih.gov/>
+    * NIH CACTUS <https://cactus.nci.nih.gov/>
+    * Online SMILES Translator and Structure File Generator <https://cactus.nci.nih.gov/translate/>
+    * Chemical Structure Lookup Service (CSLS) <https://cactus.nci.nih.gov/cgi-bin/lookup/search>
+* ChemSpider: <http://www.chemspider.com/>
+* ChEMBL: <https://www.ebi.ac.uk/chembl/>
+* Jmol Demo: 
+    * <https://chemapps.stolaf.edu/jmol/jsmol/simple1.htm>
+    * <http://ostueker.github.io/simple_jmol_demo/jmol_surfaces.html>
 
 ---
 geometry: margin=0.75in

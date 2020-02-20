@@ -1677,6 +1677,9 @@ background-color: #f7f3de; } }
 background-color: "#EEEEEE";
 font-weight: bold;
 }
+#TOC {
+font-size: 20px;
+}
 </style>
   <!-- Printing and PDF exports -->
   <script>
@@ -1730,10 +1733,17 @@ font-weight: bold;
 <ul>
 <li><a href="#/model-chemistry">Model Chemistry</a></li>
 </ul></li>
-<li> </li>
+<li> 
+<ul>
+<li><a href="#/basis-set">Basis Set</a></li>
+</ul></li>
 <li> 
 <ul>
 <li><a href="#/job-type">Job Type</a></li>
+</ul></li>
+<li> 
+<ul>
+<li><a href="#/notes-about-keywords">Notes about Keywords:</a></li>
 </ul></li>
 <li> 
 <ul>
@@ -1746,6 +1756,10 @@ font-weight: bold;
 <li> 
 <ul>
 <li><a href="#/important-link0-commands">Important Link0 commands</a></li>
+</ul></li>
+<li> 
+<ul>
+<li><a href="#/alternative-way-to-specify-memory-and-cpus">Alternative Way to Specify Memory and CPUs</a></li>
 </ul></li>
 <li><a href="#/running-gaussian-at-compute-canada">Running Gaussian at Compute Canada</a></li>
 <li> 
@@ -1762,6 +1776,10 @@ font-weight: bold;
 </ul></li>
 <li> 
 <ul>
+<li><a href="#/specifying-resources-with-environment-vars">Specifying Resources with environment vars</a></li>
+</ul></li>
+<li> 
+<ul>
 <li><a href="#/running-gaussian-in-parallel">Running Gaussian in parallel</a></li>
 </ul></li>
 <li> 
@@ -1773,8 +1791,14 @@ font-weight: bold;
 <li><a href="#/estimating-memory-usage-with-freqmem">Estimating memory usage with freqmem</a></li>
 </ul></li>
 <li><a href="#/links">Links</a></li>
-<li> </li>
-<li> </li>
+<li> 
+<ul>
+<li><a href="#/software">Software</a></li>
+</ul></li>
+<li> 
+<ul>
+<li><a href="#/online-databasesservices">Online Databases/services</a></li>
+</ul></li>
 </ul>
 </section>
 
@@ -1895,6 +1919,7 @@ so such atoms 3, 2 &amp; 1 are at an angle <em>A1</em>.</li>
 </section>
 <section class="slide level1">
 
+<h3 id="basis-set">Basis Set</h3>
 <p>A basis set defines a set of basis functions, which are used to calculate the molecular orbitals. Common basis sets are:</p>
 <ul>
 <li><code>STO-3G</code> (minimal basis using “Slater Type Orbitals”),</li>
@@ -1919,6 +1944,16 @@ so such atoms 3, 2 &amp; 1 are at an angle <em>A1</em>.</li>
 <li><code>Opt=TS</code> – Transition State search</li>
 <li>Scanning Potential Energy Surfaces</li>
 </ul>
+</section>
+<section class="slide level1">
+
+<h3 id="notes-about-keywords">Notes about Keywords:</h3>
+<ul>
+<li>Capitalization does not matter. <code>OPT</code> is the same as <code>Opt</code> or <code>opt</code>.</li>
+<li>keywords and options may be shortened to their shortest unique abbreviation. The keyword is actually <code>Optimization</code>, but as no other keyword begins with <code>Opt</code>, it can be abbreviated.</li>
+<li>Some keywords can take options (see documentation) e.g. <code>Opt=Z-Matrix</code> or or <code>Opt=TS</code>. These options can also be combined e.g. <code>Opt=(TS,Z-Matrix)</code>.</li>
+</ul>
+<p>List of Gaussian Keywords: <a href="https://gaussian.com/keywords/" class="uri">https://gaussian.com/keywords/</a></p>
 </section>
 <section class="slide level1">
 
@@ -1966,10 +2001,49 @@ so such atoms 3, 2 &amp; 1 are at an angle <em>A1</em>.</li>
 <h2 id="important-link0-commands">Important Link0 commands</h2>
 <ul>
 <li><p><code>%MEM=30GB</code> – request 30GB of memory</p></li>
-<li><p><code>%NProcShared=4</code> – request a job for 4 CPUs</p></li>
+<li><p><code>%NProcShared=4</code> – (or <code>%NProc=4</code>) request a job for 4 CPUs</p></li>
 <li><p><code>%CHK=/scratch/username/mycoolmolecule.chk</code> – set checkpoint filename</p></li>
 </ul>
 <p>Gaussian Link0 commands: <a href="http://gaussian.com/link0/" class="uri">http://gaussian.com/link0/</a></p>
+</section>
+<section class="slide level1">
+
+<h2 id="alternative-way-to-specify-memory-and-cpus">Alternative Way to Specify Memory and CPUs</h2>
+<p>Order of precedence: Link0 &gt; command line &gt; environment variable</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Link0 (%-lines)</th>
+<th>command line</th>
+<th style="text-align: left;">environment variable</th>
+<th style="text-align: left;">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><code>%Mem=30GB</code></td>
+<td><code>-m=30GB</code></td>
+<td style="text-align: left;"><code>export GAUSS_MDEF=&quot;30GB&quot;</code></td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>%NProc=4</code></td>
+<td></td>
+<td style="text-align: left;"><code>export GAUSS_PDEF=&quot;4&quot;</code></td>
+<td style="text-align: left;">†</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>%CPU=0-31</code></td>
+<td><code>-c=&quot;0-31&quot;</code></td>
+<td style="text-align: left;"><code>export GAUSS_CDEF=&quot;0-31&quot;</code></td>
+<td style="text-align: left;">‡</td>
+</tr>
+</tbody>
+</table>
+<p>See <em>Equivalency</em>-tab on <a href="http://gaussian.com/options/" class="uri">http://gaussian.com/options/</a> or <a href="http://gaussian.com/link0/" class="uri">http://gaussian.com/link0/</a>.</p>
+<p><small> *: Unit is indicated as <code>MB</code> or <code>GB</code> (not <code>M</code> or <code>G</code> as for SLURM).<br />
+†: The command line option <code>-p</code> does not work for Gaussian 16.c01.<br />
+‡: The Gaussian manual suggests using <code>%CPU</code> instead of <code>%NProc</code> to make sure that Gaussian processes are “pinned” to the processors, which can avoid cache misses. On Compute Canada clusters, processes are pinned automatically by the scheduler and at the time of job-submission it cannot be determined which specific CPU cores will be assigned to the job. If at all, the <code>%CPU</code> notation (or its counterparts) should only be used when requesting whole nodes. </small></p>
 </section>
 <section id="running-gaussian-at-compute-canada" class="slide level1">
 <h1>Running Gaussian at Compute Canada</h1>
@@ -2030,6 +2104,30 @@ I will notify Compute Canada of any change in the above acknowledgement.</p>
 <span id="mycode-6"><a href="#mycode-6"></a>My Big Molecule with a large basis set</span>
 <span id="mycode-7"><a href="#mycode-7"></a></span>
 <span id="mycode-8"><a href="#mycode-8"></a>...</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h2 id="specifying-resources-with-environment-vars">Specifying Resources with environment vars</h2>
+<p><strong>big_gaussian_job.sh:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#SBATCH --mem=125G            # memory per node</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#SBATCH --cpus-per-task=32    # cpus as defined by GAUSS_PDEF</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#SBATCH --time=03-00:00       # expect run time (DD-HH:MM)</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">module</span> load gaussian/g16.c01 </span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co"># use localscatch:</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="bu">export</span> <span class="va">GAUSS_SCRDIR=$SLURM_TMPDIR</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="bu">export</span> <span class="va">GAUSS_MDEF=</span><span class="st">&quot;124GB&quot;</span>     <span class="co"># A bit lower than --mem=</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="bu">export</span> <span class="va">GAUSS_PDEF=</span><span class="st">&quot;32&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="ex">g16</span> <span class="op">&lt;</span> big_molecule.com  <span class="op">&gt;</span> big_molecule.log</span></code></pre></div>
+<p><strong>big_molecule.com:</strong></p>
+<div class="sourceCode" id="mycode" data-startFrom="1"><pre class="sourceCode numberSource gaussian numberLines"><code class="sourceCode"><span id="mycode-1"><a href="#mycode-1"></a>%CHK=/scratch/&lt;USERNAME&gt;/big_molecule.chk</span>
+<span id="mycode-2"><a href="#mycode-2"></a>#N MP2/6-311++G(3df,2p)  OPT  FREQ   MaxDisk=400GB</span>
+<span id="mycode-3"><a href="#mycode-3"></a></span>
+<span id="mycode-4"><a href="#mycode-4"></a>My Big Molecule with a large basis set</span>
+<span id="mycode-5"><a href="#mycode-5"></a></span>
+<span id="mycode-6"><a href="#mycode-6"></a>...</span></code></pre></div>
+<p><small> <strong>Note</strong> that the unit for <code>--mem</code> is <code>G</code>, while for <code>GAUSS_MDEF</code> it is <code>GB</code>! </small></p>
 </section>
 <section class="slide level1">
 
@@ -2112,6 +2210,7 @@ $ freqmem 52 1216  r sp
 </section>
 <section class="slide level1">
 
+<h2 id="software">Software</h2>
 <ul>
 <li>Molecule Editors:
 <ul>
@@ -2135,8 +2234,7 @@ $ freqmem 52 1216  r sp
 </section>
 <section class="slide level1">
 
-<ul>
-<li>Online Databases/services:
+<h2 id="online-databasesservices">Online Databases/services</h2>
 <ul>
 <li>NIH:
 <ul>
@@ -2151,7 +2249,6 @@ $ freqmem 52 1216  r sp
 <ul>
 <li><a href="https://chemapps.stolaf.edu/jmol/jsmol/simple1.htm" class="uri">https://chemapps.stolaf.edu/jmol/jsmol/simple1.htm</a></li>
 <li><a href="http://ostueker.github.io/simple_jmol_demo/jmol_surfaces.html" class="uri">http://ostueker.github.io/simple_jmol_demo/jmol_surfaces.html</a></li>
-</ul></li>
 </ul></li>
 </ul>
 </section>
