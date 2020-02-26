@@ -2190,10 +2190,12 @@ Memory Efficiency: 58.40% of 125.00 GB               &lt;===</code></pre>
 $ grep --max 1 &quot;basis functions,&quot; *.log 
   1216 basis functions,  1728 primitive gaussians,  1360 cartesian basis functions
 
-$ freqmem 52 1216  r sp
-  NAtoms=52 NBasis=1216 closed-shell frequencies with up to SP functions:  
-  Minimum of 231.66 megawords per thread.</code></pre>
-<p>1 megaword = 64 bit = 8 bytes</p>
+$ freqmem 52 1216  r spd
+  NAtoms=52 NBasis=1216 closed-shell frequencies with up to SPD functions:  
+  Minimum of 231.68 megawords per thread.</code></pre>
+<p>1 word = 64 bit = 8 bytes<br />
+1 megaword = 64 Mbit = 8 MB<br />
+232 megawords = 1856 MB</p>
 <p>Gaussian freqmem utility: <a href="http://gaussian.com/freqmem/" class="uri">http://gaussian.com/freqmem/</a></p>
 </section>
 <section id="links" class="slide level1">

@@ -463,12 +463,14 @@ $ grep --max 1 Stoichiometry *.log
 $ grep --max 1 "basis functions," *.log 
   1216 basis functions,  1728 primitive gaussians,  1360 cartesian basis functions
 
-$ freqmem 52 1216  r sp
-  NAtoms=52 NBasis=1216 closed-shell frequencies with up to SP functions:  
-  Minimum of 231.66 megawords per thread.
+$ freqmem 52 1216  r spd
+  NAtoms=52 NBasis=1216 closed-shell frequencies with up to SPD functions:  
+  Minimum of 231.68 megawords per thread.
 ```
 
-1 megaword = 64 bit = 8 bytes
+1 word = 64 bit = 8 bytes  
+1 megaword = 64 Mbit = 8 MB  
+232 megawords = 1856 MB
 
 Gaussian freqmem utility: <http://gaussian.com/freqmem/>
 
